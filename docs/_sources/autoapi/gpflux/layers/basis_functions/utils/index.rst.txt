@@ -1,0 +1,48 @@
+:py:mod:`gpflux.layers.basis_functions.utils`
+=============================================
+
+.. py:module:: gpflux.layers.basis_functions.utils
+
+.. autoapi-nested-parse::
+
+   This module provides a set of common utilities for kernel feature decompositions.
+
+
+
+Module Contents
+---------------
+
+.. py:function:: _sample_students_t(nu: float, shape: gpflux.types.ShapeType, dtype: gpflow.base.DType) -> gpflow.base.TensorType
+
+   Draw samples from a (central) Student's t-distribution using the following:
+     BETA ~ Gamma(nu/2, nu/2) (shape-rate parameterization)
+     X ~ Normal(0, 1/BETA)
+   then:
+     X ~ StudentsT(nu)
+
+   Note this is equivalent to the more commonly used parameterization
+     Z ~ Chi2(nu) = Gamma(nu/2, 1/2)
+     EPSILON ~ Normal(0, 1)
+     X = EPSILON * sqrt(nu/Z)
+
+   To see this, note
+     Z/nu ~ Gamma(nu/2, nu/2)
+   and
+     X ~ Normal(0, nu/Z)
+   The equivalence becomes obvious when we set BETA = Z/nu
+
+
+.. py:function:: _mapping_cosine(X: gpflow.base.TensorType, W: gpflow.base.TensorType, b: gpflow.base.TensorType, variance: gpflow.base.TensorType, lengthscales: gpflow.base.TensorType, n_components: int) -> gpflow.base.TensorType
+
+   Feature map for random Fourier features (RFF) as originally prescribed
+   by Rahimi & Recht, 2007 :cite:p:`rahimi2007random`.
+   See also :cite:p:`sutherland2015error` for additional details.
+
+
+.. py:function:: _mapping_concat(X: gpflow.base.TensorType, W: gpflow.base.TensorType, variance: gpflow.base.TensorType, lengthscales: gpflow.base.TensorType, n_components: int) -> gpflow.base.TensorType
+
+   Feature map for random Fourier features (RFF) as originally prescribed
+   by Rahimi & Recht, 2007 :cite:p:`rahimi2007random`.
+   See also :cite:p:`sutherland2015error` for additional details.
+
+
